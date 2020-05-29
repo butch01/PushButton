@@ -45,6 +45,7 @@ PushButton::PushButton(char mode, int buttonPin = -1) {
 	_logicalState=false;
 	_debounceTimeStart=-1;
 	processButtonState();
+	_buttonStatePressedOnlyOnce=false;
 }
 
 PushButton::~PushButton() {
@@ -74,6 +75,9 @@ void PushButton::processButtonState()
 		Serial.print(" ");
 	#endif
 
+	// mark buttonOnceState as false. It will onle be set to true if the logical state changes.
+	_buttonStatePressedOnlyOnce=false;
+
 	// check if debounce time is not started
 	if (_debounceTimeStart == -1)
 	{
@@ -87,11 +91,15 @@ void PushButton::processButtonState()
 
 			// mark logical button state change as outstanding
 			_hasLogicalStateChangeBeenProcessed=false;
+
+
+
 		}
 		else
 		{
 			// debounce intervall has not been started && button is not pressed
 					//-> do nothing
+
 		}
 
 	}
@@ -104,6 +112,7 @@ void PushButton::processButtonState()
 			// since we are inside the debounce interval, ignore switches of the button state and do nothing
 			// -> do nothing
 			
+
 		}
 		else
 		{
@@ -136,6 +145,9 @@ void PushButton::processButtonState()
 
 					// remember that logical state change has been done
 					_hasLogicalStateChangeBeenProcessed=true;
+
+					// mark the button as pressed (once)
+					_buttonStatePressedOnlyOnce=true;
 				}
 			}
 			else
@@ -199,4 +211,10 @@ bool PushButton::getButtonStateLogical()
 long PushButton::getTimeOfCurrentRawButtonState()
 {
 	return millis()- _lastButtonStateChangedTime;
+}
+
+
+bool PushButton::getButtonPressedOnlyOnce()
+{
+	return _buttonStatePressedOnlyOnce;
 }

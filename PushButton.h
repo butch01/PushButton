@@ -33,6 +33,8 @@ private:
 
 	char _mode; // mode which will be used. (0: use pin input, 1: use alternate input -> set state from outside)
 
+	bool _buttonStatePressedOnlyOnce;
+
 
 public:
 	PushButton(char _mode, int _buttonPin); // mode 0 for internal /use GPIO), mode 1 for external (set status directly by other source). buttonPin will be set to -1 if mode is external is optional and will be ignored.
@@ -44,6 +46,7 @@ public:
 	bool getButtonStateRawDebounced();
 	bool getButtonStateLogical();
 	long getTimeOfCurrentRawButtonState(); // how long is the current raw button state existing?
+	bool getButtonPressedOnlyOnce(); // on long press, it returns only once true
 
 };
 
