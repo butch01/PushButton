@@ -44,6 +44,7 @@ public:
 	void processButtonState();
 	bool getButtonStateRawData();
 	bool getButtonStateRawDebounced();
+	bool PushButton::getButtonStateRawDebouncedInputPullup(); // negated getButtonStateRawDebounced()
 	bool getButtonStateLogical();
 	long getTimeOfCurrentRawButtonState(); // how long is the current raw button state existing?
 	bool getButtonPressedOnlyOnce(); // on long press, it returns only once true

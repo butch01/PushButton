@@ -188,6 +188,24 @@ bool PushButton::getButtonStateRawDebounced()
 }
 
 /**
+ * returns the unbounced button state, but in negated form.
+ * intended to be used with INPUT_PULLUP, where then normal debounced state returns true, if the button is NOT pressed.
+ */
+bool PushButton::getButtonStateRawDebouncedInputPullup()
+{
+	if (_buttonStateUnbounced)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+
+
+/**
  * returns the real state of the button (pressed / not pressed)
  */
 bool PushButton::getButtonStateRawData()
