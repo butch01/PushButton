@@ -61,7 +61,7 @@ void PushButton::setDebounceTimeMs(int time)
 }
 
 
-void PushButton::processButtonState()
+void PushButton::processButtonState(bool flipLogicalState=true)
 {
 	// get current button state ti have consistent baseline for this run
 	bool currentButtonState = digitalRead(_buttonPin);
@@ -130,18 +130,24 @@ void PushButton::processButtonState()
 				}
 				else
 				{
-					// has not been applied yet
-					// flip the logical state
-					if (_logicalState)
+					// only flip logicalState if  flipLogicalState == true. (can be disabled in menu for example)
+					if (flipLogicalState == true)
 					{
-						// true -> flip to false
-						_logicalState=false;
+						// has not been applied yet
+						// flip the logical state
+						if (_logicalState)
+						{
+							// true -> flip to false
+							_logicalState=false;
+						}
+						else
+						{
+							// false -> flip to true
+							_logicalState=true;
+						}
 					}
-					else
-					{
-						// false -> flip to true
-						_logicalState=true;
-					}
+
+					// keep original logic regardless if flipLogicalState == true
 
 					// remember that logical state change has been done
 					_hasLogicalStateChangeBeenProcessed=true;

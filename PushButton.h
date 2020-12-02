@@ -41,7 +41,7 @@ public:
 	void setPin();
 	virtual ~PushButton();
 	void setDebounceTimeMs(int time);
-	void processButtonState();
+	void processButtonState(bool flipLogicalState=true);
 	bool getButtonStateRawData();
 	bool getButtonStateRawDebounced();
 	bool PushButton::getButtonStateRawDebouncedInputPullup(); // negated getButtonStateRawDebounced()
